@@ -1,6 +1,7 @@
 package com.route.newsappc38sat.ui.home.news
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.route.api.model.newsResponse.News
@@ -11,7 +12,13 @@ class NewsAdapter(var newsList: List<News?>? = null) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val news = newsList!![position]
         holder.bind(news)
+        onNewsClick?.let {
+            holder.itemBinding.NewsLayout.setOnClickListener(View.OnClickListener {
+                onNewsClick?.onItemClick(news)
+            })
+        }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewBinding = ItemNewsBinding.inflate(
@@ -32,5 +39,11 @@ class NewsAdapter(var newsList: List<News?>? = null) :
             itemBinding.news = news
             itemBinding.invalidateAll()
         }
+    }
+
+    var onNewsClick: OnNewsClick? = null
+
+    interface OnNewsClick {
+        fun onItemClick(news: News?)
     }
 }
