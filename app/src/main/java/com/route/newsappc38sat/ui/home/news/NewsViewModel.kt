@@ -21,20 +21,20 @@ class NewsViewModel : ViewModel() {
     val newsLiveData = MutableLiveData<List<News?>?>()
     val errorLiveData = MutableLiveData<ViewError>()
 
-    fun getNewsSources() {
+    fun getNewsSources(categoryDataClass: CategoryDataClass) {
         //     shouldShowLoading.value =true
 //        shouldShowLoading.set(true)
 //        shouldShowLoading.get()
         shouldShowLoading.postValue(true)
         ApiManager.getApis()
-            .getSources().enqueue(object : Callback<SourcesResponse> {
+            .getSources(ApiConstants.apiKey,categoryDataClass.id).enqueue(object : Callback<SourcesResponse> {
                 override fun onFailure(call: Call<SourcesResponse>, t: Throwable) {
                     shouldShowLoading.postValue(false)
                     errorLiveData.postValue(
                         ViewError(
                             throwable = t
                         ) {
-                            getNewsSources()
+                            getNewsSources(categoryDataClass)
                         }
                     )
                 }
@@ -53,7 +53,7 @@ class NewsViewModel : ViewModel() {
                         errorLiveData.postValue(ViewError(
                             message = response.message
                         ) {
-                            getNewsSources()
+                            getNewsSources(categoryDataClass)
                         })
                     }
 

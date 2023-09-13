@@ -49,7 +49,7 @@ class NewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         initObservers()
-        viewModel.getNewsSources()
+        viewModel.getNewsSources(category)
     }
 
     private fun initObservers() {
