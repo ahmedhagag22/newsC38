@@ -31,6 +31,10 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
+            app:tabIndicatorHeight="0dp"
+            app:tabTextColor="@color/green"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabSelectedTextColor="@color/white"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:tabMode="scrollable" />

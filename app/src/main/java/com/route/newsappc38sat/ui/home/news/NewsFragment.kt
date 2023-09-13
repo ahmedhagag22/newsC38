@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.new_app.ui.category.CategoryDataClass
 import com.example.new_app.ui.newsDetails.NewsDetailsActivity
 import com.google.android.material.tabs.TabLayout
 import com.route.api.model.newsResponse.News
@@ -24,6 +26,7 @@ class NewsFragment : Fragment() {
     var curranPage = 1
     var isLoading = false
     lateinit var sourceObj: Source
+    lateinit var category:CategoryDataClass
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +111,12 @@ class NewsFragment : Fragment() {
             tab.text = source?.name
             tab.tag = source
             viewBinding.tabLayout.addTab(tab)
+            // margin for tab
+            var layoutParams = LinearLayout.LayoutParams(tab.view.layoutParams)
+            layoutParams.marginEnd = 12
+            layoutParams.marginStart = 12
+            layoutParams.topMargin = 18
+            tab.view.layoutParams = layoutParams
         }
         viewBinding.tabLayout.addOnTabSelectedListener(
             object : TabLayout.OnTabSelectedListener {
@@ -148,4 +157,12 @@ class NewsFragment : Fragment() {
                 dialogInterface.dismiss()
             })
     }
+    companion object {
+        fun getInstance(category: CategoryDataClass): NewsFragment {
+            var newNewFragment = NewsFragment()
+            newNewFragment.category=category
+            return newNewFragment
+        }
+    }
+
 }

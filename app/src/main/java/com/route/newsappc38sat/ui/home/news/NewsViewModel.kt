@@ -2,7 +2,9 @@ package com.route.newsappc38sat.ui.home.news
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.new_app.ui.category.CategoryDataClass
 import com.google.gson.Gson
+import com.route.api.ApiConstants
 import com.route.api.ApiManager
 import com.route.api.model.newsResponse.News
 import com.route.api.model.newsResponse.NewsResponse
@@ -18,14 +20,14 @@ class NewsViewModel : ViewModel() {
     val sourcesLiveData = MutableLiveData<List<Source?>?>()
     val newsLiveData = MutableLiveData<List<News?>?>()
     val errorLiveData = MutableLiveData<ViewError>()
+
     fun getNewsSources() {
         //     shouldShowLoading.value =true
 //        shouldShowLoading.set(true)
 //        shouldShowLoading.get()
         shouldShowLoading.postValue(true)
         ApiManager.getApis()
-            .getSources()
-            .enqueue(object : Callback<SourcesResponse> {
+            .getSources().enqueue(object : Callback<SourcesResponse> {
                 override fun onFailure(call: Call<SourcesResponse>, t: Throwable) {
                     shouldShowLoading.postValue(false)
                     errorLiveData.postValue(
